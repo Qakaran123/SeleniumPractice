@@ -2,7 +2,9 @@ package CrmApplication;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
@@ -33,7 +35,10 @@ public class LoginPage {
         driver.manage().window().maximize();
         driver.get("https://classic.crmpro.com/index.html");
 
-        driver.findElement(By.className("form-control")).sendKeys("qatestertest");
+       // driver.findElement(By.className("form-control")).sendKeys("qatestertest");
+        WebElement element = driver.findElement(By.className("form-control"));
+        JavascriptExecutor jse = (JavascriptExecutor)driver;
+        jse.executeScript("arguments[0].value='qatestertest ';", element);
 
         driver.findElement(By.xpath("//input[@type = 'password']")).sendKeys("Test@123");
 
@@ -44,6 +49,8 @@ public class LoginPage {
         Assert.assertEquals("CRMPRO",driver.getTitle(),"Title is not matched");
 
         //Indentify the google search box
+
+
 
         Thread.sleep(3000);
     }
